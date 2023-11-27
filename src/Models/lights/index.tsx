@@ -1,7 +1,3 @@
-import React from 'react';
-import { DirectionalLightHelper } from 'three';
-import { useHelper } from '@react-three/drei';
-
 export const SpotLight = () => {
   return(
     <group>
@@ -13,16 +9,9 @@ export const SpotLight = () => {
 export const PointLight = () => {
   return(
     <group>
-      <pointLight args={[`white`, 10]} position={[1, 0, 0]} castShadow/>
+      <pointLight args={[`white`, 100]} position={[1, 0, 0]} castShadow/>
       <pointLight args={[`white`, 10]} position={[0, 0, 0]} castShadow/>
     </group>
   )
 }
 
-export const DirectionalLight = () => {
-  const light = React.useRef(null);
-  useHelper(light, DirectionalLightHelper, 'white')
-  return(
-    <directionalLight ref={light} intensity={1} position={[-1, 0, 0]} />
-  )
-}

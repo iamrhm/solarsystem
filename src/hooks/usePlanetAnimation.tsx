@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
@@ -5,7 +6,10 @@ import * as THREE from 'three';
 const usePlanetAnimation = ({
   xRadius = 2.5, zRadius = 1.5,
   speed = 0.05, spin = 0.05
-}) => {
+}): [
+  React.Ref<any>,
+  THREE.BufferGeometry<THREE.NormalBufferAttributes>
+]  => {
   const curve = new THREE.EllipseCurve(0, 0, xRadius, zRadius);
   const clock = new THREE.Clock();
   const lineGeometry = new THREE.BufferGeometry().setFromPoints(curve.getSpacedPoints(100));

@@ -1,0 +1,44 @@
+{
+  "planets": {
+    "Mercury": {
+      "tilt": 0.01,
+      "revolution_days": 0.24,
+      "spin_days": 1.59
+    },
+    "Venus": {
+      "tilt": 2.64,
+      "revolution_days": 0.62,
+      "spin_days": -1.04
+    },
+    "Earth": {
+      "tilt": 23.5,
+      "revolution_days": 1,
+      "spin_days": 1
+    },
+    "Mars": {
+      "tilt": 25.19,
+      "revolution_days": 1.88,
+      "spin_days": 0.97
+    },
+    "Jupiter": {
+      "tilt": 3.13,
+      "revolution_days": 11.86,
+      "spin_days": 2.44
+    },
+    "Saturn": {
+      "tilt": 26.73,
+      "revolution_days": 29.46,
+      "spin_days": 2.56
+    },
+    "Uranus": {
+      "tilt": 97.77,
+      "revolution_days": 84.01,
+      "spin_days": -0.46
+    },
+    "Neptune": {
+      "tilt": 28.32,
+      "revolution_days": 164.79,
+      "spin_days": 0.67
+    }
+  }
+}
