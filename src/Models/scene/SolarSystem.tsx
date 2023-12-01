@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { useGLTF } from "@react-three/drei";
+import { GLTF } from "three-stdlib";
 
 import Planet from "../planetary/Planet";
 import SolarSysScene from '../../assets/solarSystemScene.glb?url';
@@ -11,192 +11,197 @@ interface IProps {
   rotation: [number, number, number],
 }
 
-function Model(props: IProps) {
+type GLTFResult = GLTF & {
+  nodes: {
+    node_id36_Material_58_0: THREE.Mesh;
+    node_id42_Material_66_0: THREE.Mesh;
+    node_id30_Material_51_0: THREE.Mesh;
+    node_id61_Material_89_0: THREE.Mesh;
+    node_id67_Material_96_0: THREE.Mesh;
+    node_id49_Material_73_0: THREE.Mesh;
+    node_id55_Material_81_0: THREE.Mesh;
+    node_id73_Material_104_0: THREE.Mesh;
+    node_id75_Material_105_0: THREE.Mesh;
+    node_id82_Material_116_0: THREE.Mesh;
+    node_id84_Material_117_0: THREE.Mesh;
+    node_id91_Material_126_0: THREE.Mesh;
+  };
+  materials: {
+    Material_58: THREE.MeshStandardMaterial;
+    Material_66: THREE.MeshStandardMaterial;
+    Material_51: THREE.MeshStandardMaterial;
+    Material_89: THREE.MeshStandardMaterial;
+    Material_96: THREE.MeshStandardMaterial;
+    Material_73: THREE.MeshStandardMaterial;
+    Material_81: THREE.MeshStandardMaterial;
+    Material_104: THREE.MeshStandardMaterial;
+    Material_105: THREE.MeshStandardMaterial;
+    Material_116: THREE.MeshStandardMaterial;
+    Material_117: THREE.MeshStandardMaterial;
+    Material_126: THREE.MeshStandardMaterial;
+  };
+};
+
+function SolarSystemScene(props: IProps) {
   const groupRef = React.useRef<THREE.Group>(null);
-  const { nodes, materials } = useGLTF(SolarSysScene) as any;
+  const { nodes, materials } = useGLTF(SolarSysScene) as GLTFResult;
 
   return (
     <group ref={groupRef} {...props} dispose={null}>
-      <group rotation={[-Math.PI / 2, 0, 0]} scale={0.074}>
-        <group rotation={[Math.PI / 2, 0, 0]}>
-          <group scale={4}>
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes.sun_sun1_0.geometry}
-              material={materials.sun1}
-            />
-            <Planet
-              key='mercury'
-              name='mercury'
-              planetarySystem={{ rotation: [0, 0.243, 0] }}
-              planet={{
-                rotation: [-Math.PI, -0.166, -Math.PI],
-                position: [1.5, 0, 0],
-                scale: 0.05,
-                geometry: nodes.mercury_mercury1_0.geometry,
-                material: materials.mercury1,
-                name: 'mercury'
-              }}
-            />
-            <Planet
-              key='venus'
-              name='venus'
-              planetarySystem={{ rotation: [0, -0.07, 0] }}
-              planet={{
-                rotation: [-Math.PI, 0.247, -Math.PI],
-                position: [2, 0, 0],
-                scale: 0.125,
-                geometry: nodes.venus_venus1_0.geometry,
-                material: materials.venus1,
-                name: 'venus'
-              }}
-            />
-            <Planet
-              key='earth'
-              name='earth'
-              planetarySystem={{ rotation: [0, -0.183, 0] }}
-              planet={{
-                rotation: [-Math.PI, 0.302, -Math.PI],
-                position: [2.5, 0, 0],
-                scale: 0.125,
-                geometry: nodes.earth_earth1_0.geometry,
-                material: materials.earth1,
-                name: 'earth'
-              }}
-              satellites={[{
-                position: [-1.42, 0, 0],
-                scale: 0.2,
-                geometry: nodes.moon_moon18_0.geometry,
-                material: materials.moon18,
-                name: 'moon'
-              }]}
-            />
-            <Planet
-              key='mars'
-              name='mars'
-              planetarySystem={{ rotation: [0, -0.379, 0] }}
-              planet={{
-                rotation: [-Math.PI, -0.636, -Math.PI],
-                position: [3, 0, 0],
-                scale: 0.1,
-                geometry: nodes.mars_mars1_0.geometry,
-                material: materials.mars1,
-                name: 'mars'
-              }}
-              satellites={[
-                {
-                  position: [-1.591, 0, 0],
-                  scale: 0.25,
-                  geometry: nodes.moon6_moon18_0.geometry,
-                  material: materials.moon18,
-                  name: 'mars-moon-1'
-                },
-                {
-                  position: [1.552, 0, 0],
-                  scale: 0.25,
-                  geometry: nodes.moon7_moon18_0.geometry,
-                  material: materials.moon18,
-                  name: 'mars-moon-2'
-                },
-              ]}
-            />
-            <Planet
-              key='jupiter'
-              name='jupiter'
-              planetarySystem={{ rotation: [0, -0.675, 0] }}
-              planet={{
-                rotation: [-Math.PI, -0.595, -Math.PI],
-                position: [3.75, 0, 0],
-                scale: 0.25,
-                geometry: nodes.jupiter_jupiter1_0.geometry,
-                material: materials.jupiter1,
-                name: 'jupiter'
-              }}
-              satellites={[
-                {
-                  position: [1.192, 0, 0],
-                  scale: 0.1,
-                  geometry: nodes.moon9_moon18_0.geometry,
-                  material: materials.moon18,
-                  name: 'jupiter-moon-1'
-                },
-              ]}
-            />
-            <Planet
-              key='saturn'
-              name='saturn'
-              planetarySystem={{ rotation: [-Math.PI, 1.404, -Math.PI] }}
-              planet={{
-                rotation: [-Math.PI, 0.278, -Math.PI],
-                position: [4.5, 0, 0],
-                scale: 0.225,
-                geometry: nodes.saturn_saturn1_0.geometry,
-                material: materials.saturn1,
-                name: 'saturn'
-              }}
-              ringModule={
-                {
-                  scale: [1.111, 0.222, 1.111],
-                  geometry: nodes.saturn_ring_saturn1_0.geometry,
-                  material: materials.saturn1,
-                  name: 'saturn-ring'
-                }
-              }
-            />
-            <Planet
-              key='uranus'
-              name='uranus'
-              planetarySystem={{ rotation: [0, -0.635, 0] }}
-              planet={{
-                rotation: [-Math.PI, 0.234, -Math.PI],
-                position: [5.25, 0, 0],
-                scale: 0.175,
-                geometry: nodes.uranus_uranus1_0.geometry,
-                material: materials.uranus1,
-                name: 'uranus'
-              }}
-              satellites={[
-                {
-                  position: [1.24, 0, 0],
-                  scale: 0.143,
-                  geometry: nodes.moon13_moon18_0.geometry,
-                  material: materials.moon18,
-                  name: 'uranus-moon'
-                },
-              ]}
-            />
-            <Planet
-              key='neptune'
-              name='neptune'
-              planetarySystem={{ rotation: [0, 0.084, 0] }}
-              planet={{
-                rotation: [-Math.PI, 0.291, -Math.PI],
-                position: [5.75, 0, 0],
-                scale: 0.175,
-                geometry: nodes.neptune_neptune1_0.geometry,
-                material: materials.neptune1,
-                name: 'neptune'
-              }}
-            />
-            <Planet
-              key='pluto'
-              name='pluto'
-              planetarySystem={{ rotation: [-Math.PI, -0.908, -Math.PI] }}
-              planet={{
-                rotation: [-Math.PI, 0.274, -Math.PI],
-                position: [6.25, 0, 0],
-                scale: 0.038,
-                geometry: nodes.pluto_pluto1_0.geometry,
-                material: materials.pluto1,
-                name: 'pluto'
-              }}
-            />
-          </group>
-        </group>
+      <group name="solarSystem" scale={6}>
+        <mesh
+          name="sun"
+          castShadow
+          receiveShadow
+          geometry={nodes.node_id30_Material_51_0.geometry}
+          material={materials.Material_51}
+          position={[0, 0, 0]}
+          scale={0.02}
+        />
+        <Planet
+          key='mercury'
+          name='mercury'
+          planetarySystem={{ rotation: [0, 0, 0], position: [0.35, 0, 0], scale: 0.0015 }}
+          planet={{
+            geometry: nodes.node_id36_Material_58_0.geometry,
+            material: materials.Material_58,
+            name: 'mercury'
+          }}
+        />
+        <Planet
+          key='venus'
+          name='venus'
+          planetarySystem={{ rotation: [0, 0, 0], position: [0.45, 0, 0], scale: 0.002 }}
+          planet={{
+            geometry: nodes.node_id42_Material_66_0.geometry,
+            material: materials.Material_66,
+            name: 'venus'
+          }}
+        />
+        <Planet
+          key='earth'
+          name='earth'
+          planetarySystem={{ rotation: [0, 0, 0], position: [0.6, 0, 0], scale: 0.0025 }}
+          planet={{
+            geometry: nodes.node_id49_Material_73_0.geometry,
+            material: materials.Material_73,
+            name: 'earth'
+          }}
+          satellites={[{
+            position: [20, 3, 0],
+            scale: 0.3,
+            geometry: nodes.node_id55_Material_81_0.geometry,
+            material: materials.Material_81,
+            name: 'moon'
+          }]}
+        />
+        <Planet
+          key='mars'
+          name='mars'
+          planetarySystem={{ rotation: [0, 0, 0], position: [0.75, 0, 0], scale: 0.0019 }}
+          planet={{
+            geometry: nodes.node_id49_Material_73_0.geometry,
+            material: materials.Material_89,
+            name: 'mars'
+          }}
+          satellites={[
+            {
+              position: [20, 3, 0],
+              scale: 0.2,
+              geometry: nodes.node_id61_Material_89_0.geometry,
+              material: materials.Material_81,
+              name: 'phobos'
+            },
+            {
+              position: [22, 0, 0],
+              scale: 0.1,
+              geometry: nodes.node_id55_Material_81_0.geometry,
+              material: materials.Material_81,
+              name: 'deimos'
+            },
+          ]}
+        />
+        <Planet
+          key='jupiter'
+          name='jupiter'
+          planetarySystem={{ rotation: [0, 0, 0], position: [0.95, 0, 0], scale: 0.005 }}
+          planet={{
+            geometry: nodes.node_id67_Material_96_0.geometry,
+            material: materials.Material_96,
+            name: 'jupiter'
+          }}
+          satellites={[
+            {
+              position: [18, 0, 0],
+              scale: 0.2,
+              geometry: nodes.node_id61_Material_89_0.geometry,
+              material: materials.Material_81,
+              name: 'europa'
+            },
+          ]}
+        />
+        <Planet
+          key='saturn'
+          name='saturn'
+          planetarySystem={{ rotation: [0, 0, 0], position: [1.23, 0, 0], scale: 0.00035 }}
+          planet={{
+            geometry: nodes.node_id73_Material_104_0.geometry,
+            material: materials.Material_104,
+            position: [0, 0, 0],
+            scale: 9.559,
+            name: 'saturn'
+          }}
+          ringModule={{
+            geometry: nodes.node_id75_Material_105_0.geometry,
+            material: materials.Material_105,
+            position: [625.269, 0, 0],
+            scale: [98.217, 98.217, 392.868],
+          }}
+        />
+        <Planet
+          key='uranus'
+          name='uranus'
+          planetarySystem={{ rotation: [0, 0, 0], position: [1.45, 0, 0], scale: 0.00021 }}
+          planet={{
+            geometry: nodes.node_id82_Material_116_0.geometry,
+            material: materials.Material_116,
+            position: [0, 0, 0],
+            scale: 12.53,
+            name: 'uranus'
+          }}
+          satellites={[
+            {
+              position: [20, 0, 0],
+              scale: 0.2,
+              geometry: nodes.node_id61_Material_89_0.geometry,
+              material: materials.Material_81,
+              name: 'titania'
+            },
+          ]}
+        />
+        <Planet
+          key='neptune'
+          name='neptune'
+          planetarySystem={{ rotation: [0, 0, 0], position: [1.6, 0, 0], scale: 0.0018 }}
+          planet={{
+            geometry: nodes.node_id91_Material_126_0.geometry,
+            material: materials.Material_126,
+            name: 'neptune'
+          }}
+        />
+        <Planet
+          key='pluto'
+          name='pluto'
+          planetarySystem={{ rotation: [0, 0, 0], position: [1.7, 0, 0], scale: 0.0008 }}
+          planet={{
+            geometry: nodes.node_id36_Material_58_0.geometry,
+            material: materials.Material_58,
+            name: 'pluto'
+          }}
+        />
       </group>
     </group>
   );
 }
 
-export default Model;
+export default SolarSystemScene;

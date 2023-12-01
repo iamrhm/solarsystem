@@ -5,9 +5,9 @@ import SolarSystem from './Models/scene/SolarSystem';
 import { PointLight, SpotLight } from './Models/lights';
 
 const adjustPreview = () => {
-  const scale: [number, number, number] = [4, 4, 4];
+  const scale: [number, number, number] = [1, 1, 1];
   const position: [number, number, number] = [0, 0, 0];
-  const rotation: [number, number, number] = [0 , 0, 0];
+  const rotation: [number, number, number] = [Math.PI/16 , -Math.PI/2, 0];
   return [scale, position, rotation];
 };
 
@@ -17,9 +17,9 @@ function App() {
     <Canvas
       gl={{ preserveDrawingBuffer: true }}
       shadows
-      camera={{ position: [0, 0, 20], fov: 50, far: 3000 }}
+      camera={{ position: [0, 0, 20], fov: 50 }}
     >
-      <ambientLight intensity={1.5}/>
+      <ambientLight intensity={1}/>
       <PointLight />
       <SpotLight />
       <SolarSystem
