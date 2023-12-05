@@ -2,12 +2,12 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 
 import SolarSystem from './Models/scene/SolarSystem';
-import { PointLight, SpotLight } from './Models/lights';
+import { PointLight } from './Models/lights';
 
 const adjustPreview = () => {
   const scale: [number, number, number] = [1, 1, 1];
   const position: [number, number, number] = [0, 0, 0];
-  const rotation: [number, number, number] = [Math.PI/16 , -Math.PI/2, 0];
+  const rotation: [number, number, number] = [0, -Math.PI/2, 0];
   return [scale, position, rotation];
 };
 
@@ -17,11 +17,10 @@ function App() {
     <Canvas
       gl={{ preserveDrawingBuffer: true }}
       shadows
-      camera={{ position: [0, 0, 20], fov: 50 }}
+      camera={{ position: [0, 10, 20], fov: 80 }}
     >
-      <ambientLight intensity={1}/>
+      <ambientLight intensity={0.5} color={'white'} />
       <PointLight />
-      <SpotLight />
       <SolarSystem
         position={position}
         scale={scale}
@@ -33,6 +32,7 @@ function App() {
         enableRotate={true}
         minZoom={10}
       />
+      {/* <gridHelper args={[80, 80, 80]} /> */}
     </Canvas>
   )
 }

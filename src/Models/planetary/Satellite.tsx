@@ -1,21 +1,12 @@
-import usePlanetAnimation from '../../hooks/usePlanetAnimation';
+import useSatelliteAnimation from '../../hooks/useSatelliteAnimation';
 
-import planetConfig from '../../configs';
+import { SolarSystemSatellites, ISatellite, WithTexture } from '../../configs';
 
-export interface ICelestialBody {
-  position?: [number, number, number],
-  scale?: number,
-  tilt?: number,
-  geometry: THREE.BufferGeometry<THREE.NormalBufferAttributes>,
-  material?: THREE.Material | THREE.Material[] | undefined,
-  name: keyof typeof planetConfig,
-}
-
-const Satellite = (props: ICelestialBody) => {
-  const [satelliteRef] = usePlanetAnimation({
-    xRadius: Array.isArray(props.position) ? props.position[0] : 0,
-    zRadius: Array.isArray(props.position) ? props.position[0] : 0,
-    name: props.name,
+const Satellite = (props: WithTexture<ISatellite<SolarSystemSatellites>>) => {
+  const [satelliteRef] = useSatelliteAnimation({
+    xRadius: props.position[0],
+    yRadius: props.position[0],
+    satellite: props,
   });
 
   return (

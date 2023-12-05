@@ -2,26 +2,33 @@ import React from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-import planetConfig from '../configs';
+import { IPlanet, SolarPlanets, WithTexture } from '../configs';
 
 const usePlanetAnimation = ({
-  xRadius, zRadius,
-  name,
+  xRadius, yRadius,
+  planet,
 }: {
-  xRadius: number, zRadius: number,
-  name: keyof typeof planetConfig,
+  xRadius: number, yRadius: number,
+  planet: WithTexture<IPlanet<SolarPlanets>>,
 }): [
   React.Ref<THREE.Group<THREE.Object3DEventMap>>,
   React.Ref<THREE.Group<THREE.Object3DEventMap>>,
-  THREE.BufferGeometry<THREE.NormalBufferAttributes>
 ]  => {
-  const curve = new THREE.EllipseCurve(0, 0, xRadius, zRadius - 0.05);
+  const curve = new THREE.EllipseCurve(0, 0, xRadius, yRadius);
   const clock = new THREE.Clock();
-  const { revolution, spin } = planetConfig[name];
+  const { revolution, spin, name } = planet;
 
-  const lineGeometry = new THREE.BufferGeometry().setFromPoints(curve.getSpacedPoints(100));
-  lineGeometry.rotateX(-Math.PI * 0.5);
-  lineGeometry.rotateZ(Math.PI/8);
+  const line = new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(curve.getSpacedPoints(100)),
+    new THREE.LineBasicMaterial({
+      color: "yellow"
+    })
+  );
+
+  line.rotation.x = -Math.PI * 0.25;
+  line.rotation.z = Math.PI * 0.125;
+  line.position.x = 5;
+  line.position.z = -2;
 
   const childRef = React.useRef<THREE.Group<THREE.Object3DEventMap>>(null);
   const systemRef = React.useRef<THREE.Group<THREE.Object3DEventMap>>(null);
@@ -30,10 +37,6 @@ const usePlanetAnimation = ({
     const t = (clock.getElapsedTime() * 0.05 * (1 / revolution)) % 1;
     const v = curve.getPointAt(t);
     if (systemRef.current) {
-      if (name === 'mercury') {
-        systemRef.current.position.x = v.x;
-        systemRef.current.position.z = v.y;
-      }
       systemRef.current.position.x = v.x;
       systemRef.current.position.z = v.y;
     } if (childRef.current) {
@@ -45,7 +48,7 @@ const usePlanetAnimation = ({
     }
   });
 
-  return [systemRef, childRef, lineGeometry]
+  return [systemRef, childRef]
 }
 
 export default usePlanetAnimation;
